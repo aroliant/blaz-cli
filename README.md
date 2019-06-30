@@ -49,7 +49,7 @@ blaz deploy -b master -a sample-app -h https://server.example.com
 #### Deploy docker image
   
 ```shell
-blaz deploy -m myapp:latest -a sample-app -h https://server.example.com
+blaz deploy -i myapp:latest -a sample-app -h https://server.example.com
 ```
 
 #### Deploy using local config file
