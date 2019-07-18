@@ -68,4 +68,11 @@ blaz.json
 }
 ```
 
- 
+ #### Additional Argument
+
+| Argument | Name       | Description                                                            |
+|----------|------------|------------------------------------------------------------------------|
+| -v       | version    | Version of Deployment  eg. `-v 2.0`                                    |
+| -m       | build mode | eg. `local:1`, `runner:runnerName`                                     |
+|          |            | `local` - builds locally, `1` - uses 1 cpu                             |
+|          |            | `runner` - specifying custom runner, `runnerName` - name of the runner |
