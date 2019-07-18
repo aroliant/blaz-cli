@@ -68,11 +68,17 @@ blaz.json
 }
 ```
 
- #### Additional Argument
+ #### Arguments
 
-| Argument | Name       | Description                                                            |
-|----------|------------|------------------------------------------------------------------------|
-| -v       | version    | Version of Deployment  eg. `-v 2.0`                                    |
-| -m       | build mode | eg. `local:1`, `runner:runnerName`                                     |
-|          |            | `local` - builds locally, `1` - uses 1 cpu                             |
-|          |            | `runner` - specifying custom runner, `runnerName` - name of the runner |
+| Argument   | Name       | Description                                                               |
+|------------|------------|---------------------------------------------------------------------------|
+| f , folder | folder     | Deploys current folder                                                    |
+| t , tar    | tar file   | Deploys a tar file                                                        |
+| z , zip    | zip file   | Deploys a zip file                                                        |
+| b , branch | branch     | Deploys current branch                                                    |
+| a , app    | app        | Specify the app name                                                      |
+| h , host   | host       | Specify the host name                                                     |
+| m , mode   | build mode | eg. `local:1`, `runner:runnerName`                                        |
+|            |            | `local` - builds locally, `1` - uses 1 cpu ( default half of system cpu ) |
+|            |            | `runner` - specifying custom runner, `runnerName` - name of the runner    |
+|            |            | by default app builds on primary server/runner based on blaz settings     |
