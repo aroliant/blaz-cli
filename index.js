@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-const request = require('request-promise')
-const fs = require('fs')
-const args = require('minimist')(process.argv.slice(2));
+const args = require('minimist')(process.argv.slice(2))
+const service = require('./service')
 
 let cli = {
   mode: undefined,
@@ -51,15 +50,10 @@ if (!cli.host) {
   return console.error("Please specify an host name")
 }
 
+if (cli.mode == "tar") {
+  service.uploadTarFile(cli)
+}
 
-request({
-  uri: `${cli.host}:3000/api/apps/upload/${cli.app}`,
-  method: 'POST',
-  formData: {
-    sourceFile: fs.createReadStream(cli.context)
-  }
-}).then((result) => {
-  console.log(result)
-}).catch((err) => {
-  console.log(err)
-})
+if (cli.mode == "folder") {
+  service.tarFolder(cli)
+}
