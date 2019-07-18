@@ -10,6 +10,9 @@
     "blaz",
     "cli"
   ],
+  "bin": {
+    "blaz": "./index.js"
+  },
   "author": "Aroliant",
   "license": "ISC",
   "dependencies": {
@@ -18,6 +21,9 @@
     "email-prompt": "^0.3.2",
     "inquirer": "^6.2.2",
     "listr": "^0.14.3",
+    "minimist": "^1.2.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
     "tar-fs": "^2.0.0",
     "temp": "^0.9.0"
   }
