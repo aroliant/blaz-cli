@@ -1,18 +1,18 @@
 const request = require('request-promise')
 const fs = require('fs')
 const tar = require('tar-fs')
-const tmp = require('tmp')
 const os = require('os')
 
 module.exports = service = {
-  uploadTarFile: (cli) => {
+  uploadFile: (cli) => {
 
     request({
-      uri: `${cli.host}:3000/api/apps/upload/${cli.app}`,
+      uri: `${cli.host}:3000/api/v1/apps/upload`,
       method: 'POST',
       formData: {
-        sourceFile: fs.createReadStream(cli.context),
-        mode: cli.mode
+        sourceFile: fs.createReadStream(cli.file),
+        type: cli.mode,
+        appName: cli.app
       }
     }).then((result) => {
       console.log(result)
@@ -24,11 +24,12 @@ module.exports = service = {
 
   tarFolder: (cli) => {
     const tempFile = os.tmpdir() + "blaz_" + Date.now() + ".tar"
-    console.log(tempFile)
     fs.writeFileSync(tempFile)
     tar.pack('.').pipe(fs.createWriteStream(tempFile))
-    cli.context = tempFile
-    service.uploadTarFile(cli)
+    cli.file = tempFile
+    service.uploadFile(cli)
+  },
+
 
   }
 

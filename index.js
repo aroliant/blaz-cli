@@ -50,10 +50,13 @@ if (!cli.host) {
   return console.error("Please specify an host name")
 }
 
-if (cli.mode == "tar") {
-  service.uploadTarFile(cli)
+if (cli.mode == "tar" || cli.mode == "zip") {
+  cli.file = cli.context
 }
 
-if (cli.mode == "folder") {
-  service.tarFolder(cli)
+switch (cli.mode) {
+  case "tar": service.uploadFile(cli); break;
+  case "zip": service.uploadFile(cli); break;
+  case "folder": service.tarFolder(cli); break;
+  default: console.error("Please provide a proper deployment mode")
 }
