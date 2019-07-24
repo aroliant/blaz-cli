@@ -58,5 +58,6 @@ switch (cli.mode) {
   case "tar": service.uploadFile(cli); break;
   case "zip": service.uploadFile(cli); break;
   case "folder": service.tarFolder(cli); break;
+  case "branch": service.tarGitBranch(cli); break;
   default: console.error("Please provide a proper deployment mode")
 }
