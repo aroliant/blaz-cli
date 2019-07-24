@@ -14,7 +14,7 @@
     "blaz": "./index.js"
   },
   "author": "Aroliant",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "clui": "^0.3.6",
     "configstore": "^4.0.0",
