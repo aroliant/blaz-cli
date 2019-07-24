@@ -1,4 +1,4 @@
-const request = require('request-promise')
+const request = require('request')
 const fs = require('fs')
 const tar = require('tar-fs')
 const os = require('os')
@@ -7,22 +7,34 @@ const { exec } = require('child_process');
 
 module.exports = service = {
   uploadFile: (cli) => {
-    console.log("Uploading app", cli)
-    request({
+    console.log("Uploading app", cli.app)
+    const fileStream = fs.createReadStream(cli.file)
+    const r = request({
       uri: `${cli.host}:3000/api/v1/apps/upload`,
       method: 'POST',
       formData: {
-        sourceFile: fs.createReadStream(cli.file),
+        sourceFile: fileStream,
       },
       headers: {
         'x-app-name': cli.app,
         'x-mode': cli.mode
       }
-    }).then((result) => {
-      console.log(result)
-    }).catch((err) => {
-      console.log(err)
+    }, (err, response) => {
+      if (err) {
+        console.error(err)
+      }
+      console.log(response.body)
+      clearInterval(interval)
     })
+
+    const interval = setInterval(() => {
+      const bytesUploaded = r.req.connection._bytesDispatched
+      const originalFileSize = fs.statSync(cli.file).size
+      if (bytesUploaded > originalFileSize) {
+        return console.log("Build in progress")
+      }
+      console.log(`Uploading`, bytesUploaded, "of", originalFileSize)
+    }, 250)
 
   },
 
