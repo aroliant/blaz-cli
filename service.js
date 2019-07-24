@@ -3,11 +3,17 @@ const fs = require('fs')
 const tar = require('tar-fs')
 const os = require('os')
 const { exec } = require('child_process');
-
+const clui = require('clui');
+const Progress = clui.Progress
+const Spinner = clui.Spinner
 
 module.exports = service = {
   uploadFile: (cli) => {
+    let progressBar = new Progress((process.stdout.columns - 10))
+    let isUploading = true
+    let buildProgress = new Spinner('Build in progress', ['⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷']);
     console.log("Uploading app", cli.app)
+    process.stdout.write(progressBar.update(0))
     const fileStream = fs.createReadStream(cli.file)
     const r = request({
       uri: `${cli.host}:3000/api/v1/apps/upload`,
@@ -23,17 +29,35 @@ module.exports = service = {
       if (err) {
         console.error(err)
       }
-      console.log(response.body)
+      response = JSON.parse(response.body)
+      process.stdout.write('\n');
+      if(response.success){
+        console.log(response.message)
+      }else{
+        console.error(response.message)
+      }      
       clearInterval(interval)
+      process.exit(0)
     })
 
     const interval = setInterval(() => {
       const bytesUploaded = r.req.connection._bytesDispatched
       const originalFileSize = fs.statSync(cli.file).size
       if (bytesUploaded > originalFileSize) {
-        return console.log("Build in progress")
+        if (isUploading) {
+          process.stdout.clearLine();
+          process.stdout.cursorTo(0);
+          process.stdout.write(progressBar.update(1))
+          process.stdout.write('\n');
+          buildProgress.start()
+          isUploading = false
+        }
+        return
       }
-      console.log(`Uploading`, bytesUploaded, "of", originalFileSize)
+      const percentage = ((bytesUploaded / originalFileSize) * 100) / 100
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      process.stdout.write(progressBar.update(percentage))
     }, 250)
 
   },
