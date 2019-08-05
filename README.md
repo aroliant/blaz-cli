@@ -1,16 +1,22 @@
 
 
-## Setup
+## Server Setup
+
+Add new server
 
 ```shell
-blaz setup server
+blaz server add
 ```
-
 
 List configured servers
  
 ```shell
-blaz servers list
+blaz server list
+```
+
+Remove a server
+```shell
+blaz server remove
 ```
  
 
