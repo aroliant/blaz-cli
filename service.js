@@ -27,15 +27,18 @@ module.exports = service = {
       }
     }, (err, response) => {
       if (err) {
-        console.error(err)
+        console.log("Unable to deploy app")
+      }
+      if (!response) {
+        console.log("Unable to deploy app")
       }
       response = JSON.parse(response.body)
       process.stdout.write('\n');
-      if(response.success){
+      if (response.success) {
         console.log(response.message)
-      }else{
+      } else {
         console.error(response.message)
-      }      
+      }
       clearInterval(interval)
       process.exit(0)
     })

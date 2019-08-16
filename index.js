@@ -9,9 +9,6 @@ let cli = {
   context: undefined,
 }
 
-console.log(args)
-
-
 // Deployment Mode
 if (args.z || args.zip) {
   cli.mode = "zip"
