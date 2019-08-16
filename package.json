@@ -1,6 +1,6 @@
 {
   "name": "blaz-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI for Blaz",
   "main": "index.js",
   "scripts": {
