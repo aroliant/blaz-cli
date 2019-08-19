@@ -1,5 +1,7 @@
-
-
+## Install blaz CLI
+```shell
+npm i blaz-cli -g
+```
 ## Server Setup
 
 Add new server
